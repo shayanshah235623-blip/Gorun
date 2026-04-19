@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdsGuru AI — Pakistan's #1 Ads Strategy Tool</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f0f4ff; min-height: 100vh; }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 20px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-icon {
+    width: 44px; height: 44px; background: #e94560;
+    border-radius: 10px; display: flex; align-items: center;
+    justify-content: center; font-size: 22px;
+  }
+  .logo-text { color: white; }
+  .logo-text h1 { font-size: 22px; font-weight: 700; }
+  .logo-text p { font-size: 12px; color: #aab; }
+  .badge {
+    background: #e94560; color: white; padding: 6px 14px;
+    border-radius: 20px; font-size: 12px; font-weight: 600;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    padding: 50px 40px; text-align: center; color: white;
+  }
+  .hero h2 { font-size: 36px; font-weight: 700; margin-bottom: 12px; }
+  .hero h2 span { color: #e94560; }
+  .hero p { font-size: 16px; color: #aab; max-width: 600px; margin: 0 auto; }
+  .stats {
+    display: flex; justify-content: center; gap: 40px;
+    margin-top: 30px; flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat strong { font-size: 28px; color: #e94560; display: block; }
+  .stat span { font-size: 13px; color: #aab; }
+
+  /* MAIN CONTAINER */
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+
+  /* FORM CARD */
+  .form-card {
+    background: white; border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1); overflow: hidden;
+  }
+  .form-header {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 24px 32px; color: white;
+  }
+  .form-header h3 { font-size: 20px; font-weight: 600; }
+  .form-header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+
+  .form-body { padding: 32px; }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media(max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 13px; font-weight: 600; color: #444;
+    display: flex; align-items: center; gap: 6px;
+  }
+  label .req { color: #e94560; }
+
+  input, select, textarea {
+    padding: 12px 16px; border: 2px solid #e8ecf4;
+    border-radius: 10px; font-size: 14px; color: #333;
+    transition: all 0.2s; outline: none; width: 100%;
+    font-family: inherit; background: #fafbff;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: #667eea; background: white;
+    box-shadow: 0 0 0 4px rgba(102,126,234,0.1);
+  }
+  input.error, select.error { border-color: #e94560; background: #fff5f5; }
+  .error-msg {
+    font-size: 12px; color: #e94560; display: none;
+    align-items: center; gap: 4px;
+  }
+  .error-msg.show { display: flex; }
+
+  /* PLATFORM CARDS */
+  .platform-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .platform-card {
+    border: 2px solid #e8ecf4; border-radius: 12px;
+    padding: 16px 12px; text-align: center; cursor: pointer;
+    transition: all 0.2s; background: #fafbff;
+  }
+  .platform-card:hover { border-color: #667eea; background: #f0f4ff; }
+  .platform-card.selected { border-color: #667eea; background: linear-gradient(135deg, #f0f4ff, #e8edff); }
+  .platform-card .picon { font-size: 28px; margin-bottom: 8px; }
+  .platform-card .pname { font-size: 13px; font-weight: 600; color: #333; }
+  .platform-card .pdesc { font-size: 11px; color: #888; margin-top: 2px; }
+  .platform-card input[type="radio"] { display: none; }
+
+  /* GOAL CARDS */
+  .goal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .goal-card {
+    border: 2px solid #e8ecf4; border-radius: 10px;
+    padding: 14px; cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 12px; background: #fafbff;
+  }
+  .goal-card:hover { border-color: #667eea; }
+  .goal-card.selected { border-color: #667eea; background: #f0f4ff; }
+  .goal-card input[type="radio"] { display: none; }
+  .goal-icon { font-size: 22px; flex-shrink: 0; }
+  .goal-text strong { font-size: 13px; color: #333; display: block; }
+  .goal-text span { font-size: 11px; color: #888; }
+
+  /* BUDGET INPUT */
+  .budget-wrapper { position: relative; }
+  .budget-wrapper .currency {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    font-size: 14px; font-weight: 600; color: #667eea;
+  }
+  .budget-wrapper input { padding-left: 52px; }
+  .budget-hint { font-size: 11px; color: #888; margin-top: 4px; }
+  .budget-hint.warning { color: #e94560; }
+  .budget-hint.ok { color: #22c55e; }
+
+  /* DIVIDER */
+  .section-divider {
+    font-size: 13px; font-weight: 600; color: #667eea;
+    text-transform: uppercase; letter-spacing: 1px;
+    padding: 24px 0 16px; display: flex; align-items: center; gap: 12px;
+  }
+  .section-divider::after {
+    content: ''; flex: 1; height: 1px; background: #e8ecf4;
+  }
+
+  /* SUBMIT BUTTON */
+  .btn-generate {
+    width: 100%; padding: 18px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white; border: none; border-radius: 14px;
+    font-size: 18px; font-weight: 700; cursor: pointer;
+    transition: all 0.3s; margin-top: 24px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(102,126,234,0.4); }
+  .btn-generate:active { transform: translateY(0); }
+  .btn-generate:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* LOADING */
+  .loading-bar {
+    display: none; background: #f0f4ff; border-radius: 14px;
+    padding: 30px; text-align: center; margin-top: 24px;
+  }
+  .loading-bar.show { display: block; }
+  .progress-track {
+    background: #e8ecf4; border-radius: 10px; height: 8px;
+    margin: 16px 0; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 10px;
+    background: linear-gradient(90deg, #667eea, #e94560);
+    width: 0%; transition: width 0.5s ease;
+  }
+  .loading-steps { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+  .loading-step {
+    font-size: 12px; padding: 4px 12px; border-radius: 20px;
+    background: #e8ecf4; color: #888;
+  }
+  .loading-step.active { background: #667eea; color: white; }
+  .loading-step.done { background: #22c55e; color: white; }
+
+  /* RESULT */
+  .result-container {
+    display: none; margin-top: 30px;
+    background: white; border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1); overflow: hidden;
+  }
+  .result-container.show { display: block; }
+
+  .result-header {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    padding: 24px 32px; color: white;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .result-header h3 { font-size: 18px; font-weight: 600; }
+  .result-header p { font-size: 12px; opacity: 0.7; margin-top: 4px; }
+  .result-actions { display: flex; gap: 10px; }
+  .btn-copy, .btn-new {
+    padding: 8px 16px; border-radius: 8px; font-size: 13px;
+    font-weight: 600; cursor: pointer; border: none; transition: all 0.2s;
+  }
+  .btn-copy { background: rgba(255,255,255,0.15); color: white; }
+  .btn-copy:hover { background: rgba(255,255,255,0.25); }
+  .btn-new { background: #e94560; color: white; }
+  .btn-new:hover { background: #c73652; }
+
+  .result-body { padding: 32px; }
+  .result-body h1, .result-body h2, .result-body h3, .result-body h4 {
+    color: #1a1a2e; margin: 20px 0 10px;
+  }
+  .result-body h1 { font-size: 22px; border-bottom: 2px solid #667eea; padding-bottom: 8px; }
+  .result-body h2 { font-size: 18px; color: #667eea; }
+  .result-body h3 { font-size: 15px; color: #333; }
+  .result-body p { font-size: 14px; line-height: 1.7; color: #444; margin: 8px 0; }
+  .result-body ul, .result-body ol { padding-left: 20px; margin: 8px 0; }
+  .result-body li { font-size: 14px; line-height: 1.8; color: #444; }
+  .result-body strong { color: #1a1a2e; }
+  .result-body table {
+    width: 100%; border-collapse: collapse; margin: 16px 0;
+    font-size: 13px; border-radius: 10px; overflow: hidden;
+  }
+  .result-body th {
+    background: #667eea; color: white; padding: 10px 14px; text-align: left;
+  }
+  .result-body td { padding: 10px 14px; border-bottom: 1px solid #e8ecf4; }
+  .result-body tr:last-child td { border-bottom: none; }
+  .result-body tr:nth-child(even) td { background: #fafbff; }
+  .result-body hr { border: none; border-top: 2px solid #e8ecf4; margin: 24px 0; }
+  .result-body blockquote {
+    border-left: 4px solid #667eea; padding: 12px 16px;
+    background: #f0f4ff; border-radius: 0 10px 10px 0; margin: 12px 0;
+    font-size: 14px; color: #444;
+  }
+  .result-body code {
+    background: #f0f4ff; color: #667eea; padding: 2px 8px;
+    border-radius: 4px; font-size: 13px;
+  }
+
+  /* ERROR TOAST */
+  .toast {
+    position: fixed; bottom: 30px; right: 30px;
+    background: #e94560; color: white; padding: 16px 24px;
+    border-radius: 12px; font-size: 14px; font-weight: 600;
+    box-shadow: 0 8px 30px rgba(233,69,96,0.4);
+    transform: translateX(200px); transition: transform 0.3s;
+    z-index: 1000; max-width: 320px;
+  }
+  .toast.show { transform: translateX(0); }
+
+  /* COPY SUCCESS */
+  .copy-toast {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+    background: #22c55e; color: white; padding: 12px 24px;
+    border-radius: 10px; font-size: 14px; font-weight: 600;
+    transition: transform 0.3s; z-index: 1000;
+  }
+  .copy-toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 30px; color: #888; font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">🚀</div>
+    <div class="logo-text">
+      <h1>AdsGuru AI</h1>
+      <p>Powered by Google Gemini AI</p>
+    </div>
+  </div>
+  <div class="badge">🇵🇰 Made for Pakistan</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <h2>Apna Complete <span>Ads Strategy</span> Banao</h2>
+  <p>Sirf apni info daalein — AI aapka poora Google Ads ya Facebook Ads plan minute mein tayar kar dega</p>
+  <div class="stats">
+    <div class="stat"><strong>100%</strong><span>Free Tool</span></div>
+    <div class="stat"><strong>2 min</strong><span>Strategy Ready</span></div>
+    <div class="stat"><strong>Step-by-step</strong><span>Complete Guide</span></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+  <div class="form-card">
+    <div class="form-header">
+      <h3>📋 Apni Business Information Bharo</h3>
+      <p>Sab fields fill karein — AI aapke liye perfect strategy banayega</p>
+    </div>
+    <div class="form-body">
+
+      <div class="form-grid">
+
+        <!-- Business Name -->
+        <div class="form-group">
+          <label>🏪 Business Ka Naam <span class="req">*</span></label>
+          <input type="text" id="businessName" placeholder="e.g. Ali's Restaurant, Karachi Clothes..." />
+          <div class="error-msg" id="err-name">⚠️ Business naam zaroor likhein</div>
+        </div>
+
+        <!-- City -->
+        <div class="form-group">
+          <label>📍 Target City / Location <span class="req">*</span></label>
+          <input type="text" id="city" placeholder="e.g. Karachi, Lahore, Poora Pakistan..." />
+          <div class="error-msg" id="err-city">⚠️ Location zaroor likhein</div>
+        </div>
+
+        <!-- Business Type -->
+        <div class="form-group full">
+          <label>🏢 Aap Kya Bechte Hain / Kya Service Dete Hain <span class="req">*</span></label>
+          <input type="text" id="businessType" placeholder="e.g. Kapron ki dukan, Restaurant, Salon, Real Estate, Online Store, Doctor..." />
+          <div class="error-msg" id="err-type">⚠️ Business type zaroor likhein</div>
+        </div>
+
+        <!-- USP -->
+        <div class="form-group full">
+          <label>⭐ Aap Competitors Se Alag Kyun Hain? (Optional)</label>
+          <input type="text" id="usp" placeholder="e.g. Free delivery, 20 saal ka experience, Sab se kam price, Best quality..." />
+        </div>
+
+      </div>
+
+      <!-- Platform -->
+      <div class="section-divider">Platform Choose Karein</div>
+      <div class="platform-grid">
+        <label class="platform-card" onclick="selectPlatform('google')">
+          <input type="radio" name="platform" value="google" id="p-google">
+          <div class="picon">🔍</div>
+          <div class="pname">Google Ads</div>
+          <div class="pdesc">Search + Display + YouTube</div>
+        </label>
+        <label class="platform-card" onclick="selectPlatform('facebook')">
+          <input type="radio" name="platform" value="facebook" id="p-facebook">
+          <div class="picon">📘</div>
+          <div class="pname">Facebook / Instagram</div>
+          <div class="pdesc">Social Media Ads</div>
+        </label>
+        <label class="platform-card" onclick="selectPlatform('both')">
+          <input type="radio" name="platform" value="both" id="p-both">
+          <div class="picon">🚀</div>
+          <div class="pname">Dono Platforms</div>
+          <div class="pdesc">Google + Facebook</div>
+        </label>
+      </div>
+      <div class="error-msg" id="err-platform" style="margin-top:8px">⚠️ Koi ek platform select karein</div>
+
+      <!-- Budget -->
+      <div class="section-divider">Budget Darj Karein</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>💰 Monthly Budget (PKR) <span class="req">*</span></label>
+          <div class="budget-wrapper">
+            <span class="currency">PKR</span>
+            <input type="number" id="budget" placeholder="e.g. 5000" min="0" oninput="checkBudget()" />
+          </div>
+          <div class="budget-hint" id="budgetHint">Minimum: Google PKR 2,000 | Facebook PKR 600</div>
+          <div class="error-msg" id="err-budget">⚠️ Budget zaroor likhein</div>
+        </div>
+
+        <!-- Campaign Type -->
+        <div class="form-group">
+          <label>📊 Campaign Ka Type <span class="req">*</span></label>
+          <select id="campaignType">
+            <option value="">-- Select Campaign Type --</option>
+            <option value="Search">Search Campaign (Text Ads)</option>
+            <option value="Display">Display Campaign (Banner Ads)</option>
+            <option value="Video">Video Campaign (YouTube Ads)</option>
+            <option value="Shopping">Shopping Campaign (Products)</option>
+            <option value="Performance Max">Performance Max (AI-powered)</option>
+            <option value="Smart">Smart Campaign (Beginners)</option>
+          </select>
+          <div class="error-msg" id="err-campaign">⚠️ Campaign type select karein</div>
+        </div>
+      </div>
+
+      <!-- Goal -->
+      <div class="section-divider">Aapka Main Goal</div>
+      <div class="goal-grid">
+        <label class="goal-card" onclick="selectGoal('Brand Awareness')">
+          <input type="radio" name="goal" value="Brand Awareness">
+          <div class="goal-icon">📢</div>
+          <div class="goal-text">
+            <strong>Brand Awareness</strong>
+            <span>Zyada log mujhe jaanein</span>
+          </div>
+        </label>
+        <label class="goal-card" onclick="selectGoal('Lead Generation')">
+          <input type="radio" name="goal" value="Lead Generation">
+          <div class="goal-icon">📞</div>
+          <div class="goal-text">
+            <strong>Lead Generation</strong>
+            <span>Calls / WhatsApp / Inquiries chahiye</span>
+          </div>
+        </label>
+        <label class="goal-card" onclick="selectGoal('Sales')">
+          <input type="radio" name="goal" value="Sales">
+          <div class="goal-icon">🛒</div>
+          <div class="goal-text">
+            <strong>Sales / E-commerce</strong>
+            <span>Seedha products bechna</span>
+          </div>
+        </label>
+        <label class="goal-card" onclick="selectGoal('Website Traffic')">
+          <input type="radio" name="goal" value="Website Traffic">
+          <div class="goal-icon">🌐</div>
+          <div class="goal-text">
+            <strong>Website Traffic</strong>
+            <span>Website par zyada visitors</span>
+          </div>
+        </label>
+      </div>
+      <div class="error-msg" id="err-goal" style="margin-top:8px">⚠️ Goal select karein</div>
+
+      <!-- Target Audience -->
+      <div class="section-divider">Target Audience (Optional)</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>👥 Customer Ki Age Range</label>
+          <select id="ageRange">
+            <option value="18-65+">Sab (18-65+)</option>
+            <option value="18-24">18-24 (Young Adults)</option>
+            <option value="25-34">25-34 (Young Professionals)</option>
+            <option value="35-44">35-44 (Middle Age)</option>
+            <option value="45-65+">45-65+ (Senior)</option>
+            <option value="18-35">18-35 (Millennials)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>⚧ Gender Target</label>
+          <select id="gender">
+            <option value="All">Sab (Male + Female)</option>
+            <option value="Male">Sirf Male</option>
+            <option value="Female">Sirf Female</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>💡 Koi Extra Information? (Optional)</label>
+          <textarea id="extra" rows="2" placeholder="e.g. Ramadan offer hai, Wedding season mein zyada business, New branch khuli hai..."></textarea>
+        </div>
+      </div>
+
+      <!-- SUBMIT -->
+      <button class="btn-generate" id="generateBtn" onclick="generateStrategy()">
+        🚀 Meri Complete Ads Strategy Banao!
+      </button>
+
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading-bar" id="loadingBar">
+    <div style="font-size:24px; margin-bottom:8px">⚙️</div>
+    <div style="font-size:16px; font-weight:700; color:#333" id="loadingText">AI Strategy Tayar Ho Rahi Hai...</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="loading-steps">
+      <span class="loading-step" id="ls1">📊 Data Analysis</span>
+      <span class="loading-step" id="ls2">🎯 Keyword Research</span>
+      <span class="loading-step" id="ls3">✍️ Ad Copy</span>
+      <span class="loading-step" id="ls4">📅 Action Plan</span>
+      <span class="loading-step" id="ls5">✅ Final Review</span>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-container" id="resultContainer">
+    <div class="result-header">
+      <div>
+        <h3 id="resultTitle">✅ Aapki Complete Ads Strategy Ready Hai!</h3>
+        <p>AI se generated — personalized sirf aapke business ke liye</p>
+      </div>
+      <div class="result-actions">
+        <button class="btn-copy" onclick="copyStrategy()">📋 Copy</button>
+        <button class="btn-new" onclick="newStrategy()">🔄 Nai Strategy</button>
+      </div>
+    </div>
+    <div class="result-body" id="resultBody"></div>
+  </div>
+</div>
+
+<footer>
+  🚀 AdsGuru AI — Pakistan ke business owners ke liye free digital marketing assistant
+</footer>
+
+<!-- TOASTS -->
+<div class="toast" id="toast"></div>
+<div class="copy-toast" id="copyToast">✅ Strategy copy ho gayi!</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<script>
+  const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY'; // User apni key lagaye
+  
+  let selectedPlatform = '';
+  let selectedGoal = '';
+  let strategyText = '';
+
+  function selectPlatform(val) {
+    selectedPlatform = val;
+    document.querySelectorAll('.platform-card').forEach(c => c.classList.remove('selected'));
+    event.currentTarget.classList.add('selected');
+    document.getElementById('err-platform').classList.remove('show');
+    checkBudget();
+  }
+
+  function selectGoal(val) {
+    selectedGoal = val;
+    document.querySelectorAll('.goal-card').forEach(c => c.classList.remove('selected'));
+    event.currentTarget.classList.add('selected');
+    document.getElementById('err-goal').classList.remove('show');
+  }
+
+  function checkBudget() {
+    const budget = parseInt(document.getElementById('budget').value) || 0;
+    const hint = document.getElementById('budgetHint');
+    const platform = selectedPlatform;
+
+    if (!budget) { hint.textContent = 'Minimum: Google PKR 2,000 | Facebook PKR 600'; hint.className = 'budget-hint'; return; }
+
+    if (platform === 'google' && budget < 2000) {
+      hint.textContent = '⚠️ Google Ads ke liye minimum PKR 2,000 chahiye!'; hint.className = 'budget-hint warning';
+    } else if (platform === 'facebook' && budget < 600) {
+      hint.textContent = '⚠️ Facebook Ads ke liye minimum PKR 600 chahiye!'; hint.className = 'budget-hint warning';
+    } else if (platform === 'both' && budget < 2600) {
+      hint.textContent = '⚠️ Dono platforms ke liye minimum PKR 2,600 chahiye!'; hint.className = 'budget-hint warning';
+    } else if (budget > 0) {
+      hint.textContent = '✅ Budget theek hai! Ads chal sakte hain.'; hint.className = 'budget-hint ok';
+    }
+  }
+
+  function validateForm() {
+    let valid = true;
+    const fields = [
+      { id: 'businessName', err: 'err-name' },
+      { id: 'city', err: 'err-city' },
+      { id: 'businessType', err: 'err-type' },
+      { id: 'budget', err: 'err-budget' },
+      { id: 'campaignType', err: 'err-campaign' },
+    ];
+    fields.forEach(f => {
+      const el = document.getElementById(f.id);
+      if (!el.value.trim()) {
+        el.classList.add('error');
+        document.getElementById(f.err).classList.add('show');
+        valid = false;
+      } else {
+        el.classList.remove('error');
+        document.getElementById(f.err).classList.remove('show');
+      }
+    });
+    if (!selectedPlatform) { document.getElementById('err-platform').classList.add('show'); valid = false; }
+    if (!selectedGoal) { document.getElementById('err-goal').classList.add('show'); valid = false; }
+    return valid;
+  }
+
+  function validateBudget() {
+    const budget = parseInt(document.getElementById('budget').value) || 0;
+    if (selectedPlatform === 'google' && budget < 2000) {
+      return { ok: false, msg: `⛔ BUDGET ERROR — Google Ads\n\nBhai/Behen, Google Ads ke liye minimum PKR 2,000/month chahiye.\nAapka budget PKR ${budget} hai jo kam hai.\n\n✅ Option 1: Budget PKR 2,000+ karein phir Google Ads chalayein\n✅ Option 2: Facebook Ads try karein — sirf PKR 600 mein!\n✅ Option 3: Google My Business free mein banayein` };
+    }
+    if (selectedPlatform === 'facebook' && budget < 600) {
+      return { ok: false, msg: `⛔ BUDGET ERROR — Facebook/Instagram Ads\n\nBhai/Behen, Facebook Ads ke liye minimum PKR 600/month chahiye.\nAapka budget PKR ${budget} hai jo kam hai.\n\n✅ Recommended: PKR 1,000/month se shuru karein\n✅ Free alternatives: Facebook Page + WhatsApp Business` };
+    }
+    if (selectedPlatform === 'both' && budget < 2600) {
+      return { ok: false, msg: `⛔ BUDGET ERROR — Dono Platforms\n\nDono platforms ke liye minimum PKR 2,600 chahiye:\n• Google Ads: PKR 2,000\n• Facebook Ads: PKR 600\n\nAapka total budget: PKR ${budget}\n\n✅ Sirf ek platform choose karein abhi!` };
+    }
+    return { ok: true };
+  }
+
+  function buildPrompt() {
+    const name = document.getElementById('businessName').value.trim();
+    const city = document.getElementById('city').value.trim();
+    const type = document.getElementById('businessType').value.trim();
+    const budget = document.getElementById('budget').value;
+    const campaign = document.getElementById('campaignType').value;
+    const age = document.getElementById('ageRange').value;
+    const gender = document.getElementById('gender').value;
+    const usp = document.getElementById('usp').value.trim();
+    const extra = document.getElementById('extra').value.trim();
+    const daily = Math.round(budget / 30);
+
+    return `Tu AdsGuru AI hai — Pakistan ka #1 digital advertising expert jo Urdu/Hinglish mein guide karta hai.
+
+User ki information:
+- Business Name: ${name}
+- Business Type: ${type}
+- Location: ${city}
+- Platform: ${selectedPlatform === 'google' ? 'Google Ads' : selectedPlatform === 'facebook' ? 'Facebook/Instagram Ads' : 'Google Ads + Facebook/Instagram Ads'}
+- Campaign Type: ${campaign}
+- Monthly Budget: PKR ${budget} (Daily: PKR ${daily})
+- Goal: ${selectedGoal}
+- Target Age: ${age}
+- Gender: ${gender}
+- USP: ${usp || 'Not mentioned'}
+- Extra Info: ${extra || 'None'}
+
+Ab is business ke liye COMPLETE ads strategy likho. Ye EXACT sections include karo:
+
+# 🚀 ${name} — Complete ${selectedPlatform === 'google' ? 'Google' : selectedPlatform === 'facebook' ? 'Facebook' : 'Google + Facebook'} Ads Strategy
+
+## 📊 Campaign Overview
+(Business summary, platform, goal, budget breakdown table mein)
+
+## 💰 Budget Breakdown
+(PKR mein daily/weekly/monthly breakdown table, estimated clicks, estimated reach)
+
+## 🎯 Campaign Structure
+(Campaign name, ad groups/sets, targeting details)
+
+${selectedPlatform !== 'facebook' ? `## 🔑 Keyword Strategy
+(${name} ke liye exact keywords — exact match, phrase match, negative keywords — proper list)` : ''}
+
+${selectedPlatform !== 'google' ? `## 👥 Facebook Targeting Setup
+(Detailed interests, behaviors, demographics, lookalike audience)` : ''}
+
+## ✍️ Ad Copy — Ready to Use
+(Minimum 2 complete ads with headlines + descriptions — copy-paste ready. Google ke liye 15 headlines + 4 descriptions. Facebook ke liye 3 different ad variations)
+
+## 🖼️ Creative Recommendations
+(${type} business ke liye specific image/video specs, colors, content ideas)
+
+## ⚙️ Step-by-Step Setup Guide
+Har step numbered aur detailed — jese koi naya banda bhi samajh sake:
+
+### PHASE 1: Account Setup (Day 1)
+(Ekdum basic se shuru — Google Ads ya Facebook Ads Manager account banana)
+
+### PHASE 2: Campaign Create Karna (Day 1-2)
+(Har click explain karo — kahan jaana hai, kya type karna hai, kya select karna hai)
+
+### PHASE 3: Ad Launch Karna (Day 3)
+(Final checklist aur publish karna)
+
+### PHASE 4: Monitoring (Day 4 onwards)
+(Roz kya check karna hai, weekly review, kab change karna hai)
+
+## 📅 30-Day Action Plan
+(Week by week table — kya karna hai)
+
+## 📈 KPIs & Performance Targets
+(CTR, CPC, CPM, Conversion Rate — ${name} ke liye specific targets)
+
+## ⚠️ 5 Common Mistakes — Bilkul Mat Karna
+(${type} business ke liye specific mistakes)
+
+## 💡 Pro Tips — Sirf ${name} Ke Liye
+(Industry-specific secret tips)
+
+## 🆓 FREE Tools Jo Zaroor Use Karo
+(Google My Business, Analytics, etc.)
+
+## 📞 Next Steps — Abhi Ye Karo
+(3-5 immediate action items)
+
+IMPORTANT RULES:
+- Sab kuch Urdu/Hinglish mein likho — easy language
+- Sab numbers PKR mein hon
+- Tables use karo data ke liye
+- Har step numbered aur clear ho
+- Pakistan ke context mein examples do
+- ${name} ka naam use karo throughout
+- Very detailed aur actionable — koi bhi step vague na ho`;
+  }
+
+  async function generateStrategy() {
+    if (!validateForm()) {
+      showToast('⚠️ Sab required fields fill karein!');
+      return;
+    }
+    const budgetCheck = validateBudget();
+    if (!budgetCheck.ok) {
+      showBudgetError(budgetCheck.msg);
+      return;
+    }
+
+    document.getElementById('generateBtn').disabled = true;
+    document.getElementById('loadingBar').classList.add('show');
+    document.getElementById('resultContainer').classList.remove('show');
+    window.scrollTo({ top: document.getElementById('loadingBar').offsetTop - 20, behavior: 'smooth' });
+
+    animateLoading();
+
+    const prompt = buildPrompt();
+
+    try {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.7, maxOutputTokens: 8192 }
+          })
+        }
+      );
+
+      if (!response.ok) throw new Error('API Error: ' + response.status);
+      const data = await response.json();
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Strategy generate nahi ho saki. Please dobara try karein.';
+
+      strategyText = text;
+      showResult(text);
+    } catch (err) {
+      // Demo mode — show sample strategy
+      showResult(getDemoStrategy());
+    }
+  }
+
+  function showBudgetError(msg) {
+    const resultContainer = document.getElementById('resultContainer');
+    const resultBody = document.getElementById('resultBody');
+    document.getElementById('resultTitle').textContent = '⛔ Budget Error';
+    resultBody.innerHTML = `<div style="background:#fff5f5;border:2px solid #e94560;border-radius:12px;padding:24px;margin:0">
+      <pre style="white-space:pre-wrap;font-family:inherit;font-size:15px;color:#c0392b;line-height:1.8">${msg}</pre>
+    </div>`;
+    resultContainer.classList.add('show');
+    window.scrollTo({ top: resultContainer.offsetTop - 20, behavior: 'smooth' });
+  }
+
+  function showResult(text) {
+    document.getElementById('loadingBar').classList.remove('show');
+    document.getElementById('generateBtn').disabled = false;
+    const name = document.getElementById('businessName').value.trim();
+    document.getElementById('resultTitle').textContent = `✅ ${name} — Complete Strategy Ready!`;
+    document.getElementById('resultBody').innerHTML = marked.parse(text);
+    document.getElementById('resultContainer').classList.add('show');
+    window.scrollTo({ top: document.getElementById('resultContainer').offsetTop - 20, behavior: 'smooth' });
+  }
+
+  function animateLoading() {
+    const steps = ['ls1','ls2','ls3','ls4','ls5'];
+    const texts = ['📊 Business data analyze ho raha hai...','🎯 Keywords research ho rahi hai...','✍️ Ad copy likh raha hai...','📅 30-day plan ban raha hai...','✅ Final review ho raha hai...'];
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i > 0) { document.getElementById(steps[i-1]).className = 'loading-step done'; }
+      if (i < steps.length) {
+        document.getElementById(steps[i]).className = 'loading-step active';
+        document.getElementById('loadingText').textContent = texts[i];
+        document.getElementById('progressFill').style.width = ((i+1)/steps.length*100) + '%';
+        i++;
+      } else { clearInterval(interval); }
+    }, 2500);
+  }
+
+  function copyStrategy() {
+    navigator.clipboard.writeText(strategyText || document.getElementById('resultBody').innerText);
+    const t = document.getElementById('copyToast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  function newStrategy() {
+    document.getElementById('resultContainer').classList.remove('show');
+    document.getElementById('businessName').value = '';
+    document.getElementById('city').value = '';
+    document.getElementById('businessType').value = '';
+    document.getElementById('budget').value = '';
+    document.getElementById('usp').value = '';
+    document.getElementById('extra').value = '';
+    document.getElementById('campaignType').value = '';
+    selectedPlatform = ''; selectedGoal = '';
+    document.querySelectorAll('.platform-card, .goal-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('budgetHint').textContent = 'Minimum: Google PKR 2,000 | Facebook PKR 600';
+    document.getElementById('budgetHint').className = 'budget-hint';
+    document.getElementById('generateBtn').disabled = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function getDemoStrategy() {
+    const name = document.getElementById('businessName').value.trim();
+    const type = document.getElementById('businessType').value.trim();
+    const city = document.getElementById('city').value.trim();
+    const budget = document.getElementById('budget').value;
+    const daily = Math.round(budget/30);
+    const campaign = document.getElementById('campaignType').value;
+    return `# 🚀 ${name} — Complete Ads Strategy
+
+---
+
+## 📊 Campaign Overview
+
+| Detail | Info |
+|--------|------|
+| **Business** | ${name} |
+| **Type** | ${type} |
+| **Location** | ${city} |
+| **Platform** | ${selectedPlatform === 'google' ? 'Google Ads' : selectedPlatform === 'facebook' ? 'Facebook/Instagram Ads' : 'Google Ads + Facebook Ads'} |
+| **Campaign** | ${campaign} |
+| **Goal** | ${selectedGoal} |
+| **Monthly Budget** | PKR ${budget} |
+| **Daily Budget** | PKR ${daily} |
+
+---
+
+## 💰 Budget Breakdown
+
+| Item | Amount |
+|------|--------|
+| Monthly Budget | PKR ${budget} |
+| Daily Budget | PKR ${daily} |
+| Estimated Daily Clicks | ${Math.round(daily/15)}-${Math.round(daily/8)} clicks |
+| Estimated Monthly Clicks | ${Math.round(budget/15)}-${Math.round(budget/8)} clicks |
+| Estimated CPC | PKR 8-15 per click |
+| Expected Leads/Month | ${Math.round(budget/150)}-${Math.round(budget/80)} leads |
+
+---
+
+## 🎯 Campaign Structure
+
+**Campaign Name:** \`${name.replace(/\s/g,'_')}_${selectedGoal.replace(/\s/g,'_')}_2024\`
+
+### Ad Group 1: Main Service
+- **Keywords:** ${type} ${city}, best ${type.split(' ')[0]} ${city}, ${type.split(' ')[0]} near me
+- **Budget:** PKR ${Math.round(budget*0.6)}/month
+
+### Ad Group 2: Brand Awareness  
+- **Keywords:** ${name}, ${name} ${city}, ${type} ${city} online
+- **Budget:** PKR ${Math.round(budget*0.4)}/month
+
+---
+
+## 🔑 Keyword Strategy
+
+### ✅ Exact Match Keywords (Sabse Important):
+- \`[${type} ${city}]\`
+- \`[best ${type} in ${city}]\`
+- \`[${type} near me]\`
+- \`[${type} contact number]\`
+- \`[${name}]\`
+
+### ✅ Phrase Match Keywords:
+- \`"${type} ${city}"\`
+- \`"${city} ${type}"\`
+- \`"best ${type}"\`
+
+### ❌ Negative Keywords (Zaroor Add Karein):
+- free
+- jobs / career
+- recipe / how to make
+- cheap / bakwaas
+- youtube
+
+---
+
+## ✍️ Ad Copy — Copy-Paste Ready Karein
+
+### Ad #1 — Main Ad:
+**Headline 1:** Best ${type} in ${city} ✓  
+**Headline 2:** Call Now — Quick Response  
+**Headline 3:** ${selectedGoal === 'Lead Generation' ? 'Free Consultation Available' : 'Special Offer Today Only'}  
+**Headline 4:** Trusted by 1000+ Customers  
+**Headline 5:** Open 7 Days a Week  
+**Description 1:** ${city} ka #1 ${type}. Professional service, best quality, affordable prices. Abhi call karein ya WhatsApp par message karein. Fast response guaranteed!  
+**Description 2:** ${name} mein aapka swagat hai! ${selectedGoal === 'Sales' ? 'Special deals aur discounts available' : 'Free consultation aur expert advice'}. Aaj hi sampark karein!
+
+### Ad #2 — Alternative (A/B Test):
+**Headline 1:** ${name} — ${city}'s Top Choice  
+**Headline 2:** Affordable & Professional  
+**Headline 3:** WhatsApp Us Anytime  
+**Description:** Kya aap best ${type} dhundh rahe hain ${city} mein? ${name} se contact karein. Experienced team, quality service, pocket-friendly rates. Call ya WhatsApp karein!
+
+---
+
+## ⚙️ Step-by-Step Setup Guide
+
+### PHASE 1: Account Setup (Day 1) ⏱️ 30 minutes
+
+**Step 1: Google Ads Account Banana**
+1. ads.google.com par jayen
+2. "Start Now" click karein
+3. Apni business Gmail se login karein
+4. Business name: **${name}** likhein
+5. Country: **Pakistan** select karein
+6. Currency: **PKR** select karein
+7. Time Zone: **Pakistan Standard Time** select karein
+
+**Step 2: Billing Setup**
+1. "Tools & Settings" menu mein "Billing" par click karein
+2. "Payment Method" mein "Manual Payments" select karein (beginners ke liye best)
+3. Minimum PKR 1,000 se start karein
+4. Credit/Debit card add karein (Visa ya Mastercard)
+
+✅ **Done! Account ready hai!**
+
+---
+
+### PHASE 2: Campaign Create Karna (Day 2) ⏱️ 45 minutes
+
+**Step 1: New Campaign**
+1. Blue "+" button click karein
+2. Goal: **${selectedGoal === 'Lead Generation' ? 'Leads' : selectedGoal === 'Sales' ? 'Sales' : selectedGoal === 'Website Traffic' ? 'Website Traffic' : 'Brand Awareness & Reach'}** select karein
+3. Campaign type: **${campaign}** select karein
+4. Campaign name: \`${name.replace(/\s/g,'_')}_${campaign}_2024\` likhein
+
+**Step 2: Settings**
+1. Location: **${city}** type karein → select karein
+2. Language: **Urdu** aur **English** dono add karein
+3. Daily budget: **PKR ${daily}** likhein
+4. Bidding: **Maximize Clicks** select karein
+5. Max CPC limit: **PKR ${Math.round(daily/3)}** set karein
+
+**Step 3: Keywords Add Karein**
+1. "+ Add Keywords" click karein
+2. Har keyword alag line mein paste karein
+3. [Exact] keywords ke liye square brackets use karein
+4. "Phrase" keywords ke liye quotes use karein
+5. Save karein
+
+✅ **Done! Campaign structure ready hai!**
+
+---
+
+### PHASE 3: Ad Launch (Day 3) ⏱️ 30 minutes
+
+**Pre-Launch Checklist:**
+- ☐ Business name sahi hai
+- ☐ Website URL kaam kar rahi hai
+- ☐ Location: ${city} set hai
+- ☐ Daily budget: PKR ${daily} set hai
+- ☐ Keywords add hain (minimum 10)
+- ☐ Negative keywords add hain
+- ☐ Ad copy likhi hai (minimum 2 ads)
+- ☐ Billing active hai
+- ☐ Balance add hai
+
+**Launch Karna:**
+1. "Review Campaign" click karein
+2. Sab kuch dobara check karein
+3. "Publish" click karein
+4. Google review karega — 1-3 din lagte hain
+5. Email aayega approval ka!
+
+✅ **Mubarak ho! ${name} ka ad live hai! 🎉**
+
+---
+
+### PHASE 4: Daily Monitoring ⏱️ 5-10 min/day
+
+**Roz Ye Check Karein:**
+| Metric | Kya Dekhen | Target |
+|--------|-----------|--------|
+| Impressions | Kitne log ad dekh rahe hain | Badhta rahe |
+| Clicks | Kitne log click kar rahe hain | ${Math.round(daily/12)}+ per day |
+| CTR | Click rate | 3%+ |
+| CPC | Har click ki cost | PKR 8-20 |
+| Conversions | Actual leads/sales | ${Math.round(budget/200)}+ per month |
+
+---
+
+## 📅 30-Day Action Plan
+
+| Week | Focus | Kya Karna Hai |
+|------|-------|---------------|
+| **Week 1** | Launch | Account setup, campaign create, ads live karo |
+| **Week 2** | Monitor | Roz check karo, kuch change mat karo |
+| **Week 3** | Optimize | Weak keywords pause, strong ko boost karo |
+| **Week 4** | Scale | Winning ads ka budget badhao |
+
+---
+
+## 📈 KPIs & Targets — ${name} Ke Liye
+
+| KPI | Current Target | 3 Month Target |
+|-----|----------------|----------------|
+| Monthly Clicks | ${Math.round(budget/15)} | ${Math.round(budget/10)} |
+| CTR | 2-3% | 4-5% |
+| CPC | PKR 15 | PKR 10 |
+| Monthly Leads | ${Math.round(budget/200)} | ${Math.round(budget/120)} |
+| ROAS | 2x | 4x |
+
+---
+
+## ⚠️ 5 Mistakes — Bilkul Mat Karna
+
+1. ❌ **Broad match keywords only** — budget waste hoga galat clicks se
+2. ❌ **Negative keywords ignore karna** — irrelevant traffic aayega
+3. ❌ **Pehle hafte mein changes** — Google ka learning phase disturb hoga
+4. ❌ **Conversion tracking ke bina** — andhere mein paisa phenk rahe ho
+5. ❌ **Ek hi ad banana** — A/B testing zaroori hai improvement ke liye
+
+---
+
+## 💡 Pro Tips — ${name} Ke Liye
+
+🔥 **Tip 1:** Apna Google My Business zaroor banao — free mein Google Maps par dikhoge  
+🔥 **Tip 2:** Ad mein phone number zaroor dalo — mobile users seedha call kar sakte hain  
+🔥 **Tip 3:** Har Monday "Search Terms Report" check karo — nayi keywords milti hain  
+🔥 **Tip 4:** Peak hours mein bids badhao — ${city} mein evening 6-10pm peak time hai  
+🔥 **Tip 5:** Har 2 weeks mein ek naya ad test karo — best ad dhundho
+
+---
+
+## 🆓 Free Tools Jo Zaroor Use Karo
+
+| Tool | Kaise Help Karega | Link |
+|------|-------------------|------|
+| Google My Business | Maps par free listing | business.google.com |
+| Google Analytics | Website visitors track | analytics.google.com |
+| Google Keyword Planner | Free keywords research | ads.google.com |
+| Google Tag Manager | Tracking easy banana | tagmanager.google.com |
+
+---
+
+## 📞 Next Steps — Abhi Ye Karo!
+
+1. ✅ ads.google.com par jayen aur account banayein
+2. ✅ PKR ${budget} ka balance add karein
+3. ✅ Upar di gayi keywords copy karein
+4. ✅ Ad copy copy karein aur customize karein
+5. ✅ Launch karein aur roz 10 minute monitor karein
+
+---
+
+> 💬 **Note:** Ye strategy ${name} ke liye specifically banai gayi hai. Agar koi step mein problem aaye toh dobara strategy generate karein ya kisi Google Ads expert se consult karein.
+
+**Best of luck ${name}! Aapka business zaroor grow karega! 🚀🇵🇰**`;
+  }
+</script>
+</body>
+</html>
